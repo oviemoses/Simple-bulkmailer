@@ -1,0 +1,342 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Sending Message To Bulk Mail</title>
+<style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+-->
+</style>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script>
+function validate(doc)
+{
+	var from = document.form1.from.value;
+	var address = document.form1.address.value;
+	var subject = document.form1.subject.value;
+	var content = document.form1.content.value;
+	
+	if(from == "")
+	{
+		alert("Please enter from email id");
+		return false;
+	}
+	if (echeck(from)==false)
+	{
+	 		return false;
+	}
+	
+	if(address == "")
+	{
+		alert("Please select the file");
+		return false;
+	}
+	if(LimitAttach(doc, doc.address.value)==false){
+		return false;
+	}
+	
+	/*if(filecheck(doc,"txt")==false)
+	{
+		return false;
+	}*/
+	if(subject == "")
+	{
+		alert("Please enter the subject");
+		return false;
+	}
+}
+
+
+extArray = new Array(".xls", ".txt");
+function LimitAttach(form, file) {
+	allowSubmit = false;
+	if (!file) return;
+	while (file.indexOf("\\") != -1)
+		file = file.slice(file.indexOf("\\") + 1);
+		ext = file.slice(file.indexOf(".")).toLowerCase();
+	for (var i = 0; i < extArray.length; i++) {
+		if (extArray[i] == ext) { allowSubmit = true; break; }
+	}
+	if (allowSubmit){
+		return true;
+	}
+	else{
+		alert("Please only upload files that end in types:  " 
+		+ (extArray.join("  ")));
+		return false;
+	}
+}
+
+function echeck(str) {
+
+		var at="@"
+		var dot="."
+		var lat=str.indexOf(at)
+		var lstr=str.length
+		var ldot=str.indexOf(dot)
+		if (str.indexOf(at)==-1){
+		   alert("Invalid From ID")
+		   return false
+		}
+
+		if (str.indexOf(at)==-1 || str.indexOf(at)==0 || str.indexOf(at)==lstr){
+		   alert("Invalid From ID")
+		   return false
+		}
+
+		if (str.indexOf(dot)==-1 || str.indexOf(dot)==0 || str.indexOf(dot)==lstr){
+		    alert("Invalid From ID")
+		    return false
+		}
+
+		 if (str.indexOf(at,(lat+1))!=-1){
+		    alert("Invalid From ID")
+		    return false
+		 }
+
+		 if (str.substring(lat-1,lat)==dot || str.substring(lat+1,lat+2)==dot){
+		    alert("Invalid From ID")
+		    return false
+		 }
+
+		 if (str.indexOf(dot,(lat+2))==-1){
+		    alert("Invalid From ID")
+		    return false
+		 }
+		
+		 if (str.indexOf(" ")!=-1){
+		    alert("Invalid From ID")
+		    return false
+		 }
+
+ 		 return true					
+}
+function filecheck( f, ext ){
+
+	var badName="", allBlank=true, rx;
+	rx=new RegExp("[^\.]\."+ext+"\s*$", "i");
+		if( f.address.type=='file' )
+		{
+			//f.address.value=f.address.value.replace(/^\s+/,'').replace(/\s+$/,''); 
+			if( f.address.value.length )
+			{ 
+				allBlank=false;
+				if( !rx.test(f.address.value) )
+				badName+='\n\n' + f.address.value;
+			} 
+		} 
+	if( badName )
+	{
+		alert( 'A required .'+ext+' extension was not found in the selected file');
+		return false; 
+	}
+}
+
+</script>
+<script language="javascript" type="text/javascript" src="tiny_mce/tiny_mce.js"></script>
+		<script language="javascript" type="text/javascript">
+	   	tinyMCE.init({
+      		mode : "textareas",
+			theme : "basic",
+			language : "english",
+			//editor_css : "editor.css",
+			force_p_newlines: "false",
+			force_br_newlines: "true"
+	   	});
+</script>
+</head>
+
+<body bgcolor="#333333">
+<table width="778" border=" 0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><table width="100%" border="0 " cellspacing="0" cellpadding="0">
+   
+      <tr>
+        <td colspan="3" bgcolor="#FFFFFF">
+		  <form action="sending_mail.php" name="form1" method="POST" enctype="multipart/form-data" onsubmit="return validate(this);" >
+		  <table width="100%" border=" 0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF">
+          <tr>
+            <td width="3%" bgcolor="#FFFFFF">&nbsp;</td>
+            <td width="97%"><table width="100%" border=" 0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="49%"><table width="100%" border=" 0" cellspacing="0" cellpadding="0">
+                 
+                  <tr>
+                    <td width="10%" height="20" bgcolor="#FFFFFF"></td>
+                    <td width="1%" bgcolor="#FFFFFF"></td>
+                    <td width="28%" bgcolor="#FFFFFF"></td>
+                    <td width="20%" bgcolor="#FFFFFF">&nbsp;</td>
+                    <td width="41%" bgcolor="#FFFFFF">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td colspan="4" bgcolor="#FFFFFF">  </td>
+                    <td width="41%" height="140"  rowspan="12" valign="top" background="image/iner-outer.jpg" bgcolor="#FFFFFF" style="background-repeat:no-repeat;"><table width="85%" border=" 0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td colspan="4" align="center"><table width="100%" border=" 0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="11%">&nbsp;</td>
+                              <td width="89%" align="left" class="text1">Sending mode</td>
+                            </tr>
+                        </table></td>
+                      </tr>
+                      <tr>
+                        <td width="6%" height="40">&nbsp;</td>
+                        <td width="10%">
+                          <input name="settings" type="radio" value="messageperhour" />                      </td>
+                        <td width="35%" class="text1" nowrap="nowrap">Message per hour </td>
+                        <td width="49%"><input name="message" type="text" size="10" /></td>
+                      </tr>
+                      <tr>
+                        <td colspan="4" height="7"></td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                          <input name="settings" type="radio" value="timeoutsec" /></td>
+                        <td class="text1" nowrap="nowrap">Timeout, sec </td>
+                        <td><input name="timeout" type="text" size="10" /></td>
+                      </tr>
+                    </table></td>
+                  </tr>
+                  <tr>
+    <td width="10%" bgcolor="#FFFFFF" class="text">From </td>
+    <td width="1%" bgcolor="#FFFFFF" class="text">:</td>
+      <td width="28%" bgcolor="#FFFFFF"><input name="from" type="text" class="content_text" size="33"></td>
+      <td width="20%" bgcolor="#FFFFFF">&nbsp;</td>
+      </tr>
+  <tr height="">
+    <td width="10%" bgcolor="#FFFFFF"></td>
+    <td width="1%" bgcolor="#FFFFFF">&nbsp;</td>
+    <td width="28%" bgcolor="#FFFFFF"></td>
+    <td width="20%" bgcolor="#FFFFFF">&nbsp;</td>
+    </tr>
+  <tr>
+    <td bgcolor="#FFFFFF" class="text">Reply To</td>
+    <td bgcolor="#FFFFFF" class="text">:</td>
+    <td bgcolor="#FFFFFF"><label>
+      <input name="reply_to" type="text" class="content_text" size="33">
+    </label></td>
+    <td bgcolor="#FFFFFF">&nbsp;</td>
+    </tr>
+  <tr height="">
+    <td width="10%" bgcolor="#FFFFFF"></td>
+    <td width="1%" bgcolor="#FFFFFF">&nbsp;</td>
+    <td width="28%" bgcolor="#FFFFFF"></td>
+    <td width="20%" bgcolor="#FFFFFF">&nbsp;</td>
+    </tr>
+  <tr>
+    <td bgcolor="#FFFFFF" class="text">Address</td>
+    <td bgcolor="#FFFFFF" class="text">:</td>
+    <td colspan="2" bgcolor="#FFFFFF"><label>
+      <input name="address" type="file" class="content_text" size="33" ></label></td>
+    </tr>
+  <TR><td colspan="2"></td>
+      <td nowrap="nowrap"><span class="text1"><font color="#FF0000">(email should be csv format in .txt or excel .xls file)</font></span> </td></TR>
+  <tr>
+    <td bgcolor="#FFFFFF">&nbsp;</td>
+    <td bgcolor="#FFFFFF">&nbsp;</td>
+    <td bgcolor="#FFFFFF">&nbsp;</td>
+    <td bgcolor="#FFFFFF">&nbsp;</td>
+    </tr>
+  <tr>
+    <td bgcolor="#FFFFFF" class="text">Attachement</td>
+    <td bgcolor="#FFFFFF" class="text">:</td>
+    <td colspan="2" bgcolor="#FFFFFF"><label><input name="address1" type="file" class="content_text" size="33" ></label></td>
+    </tr>
+	<TR><td colspan="2"></td>
+      <td><span class="text1"><font color="#FF0000">(word / text / excel documents only)</font></span></td></TR>
+  <tr>
+    <td bgcolor="#FFFFFF">&nbsp;</td>
+    <td bgcolor="#FFFFFF">&nbsp;</td>
+    <td bgcolor="#FFFFFF">&nbsp;</td>
+    <td bgcolor="#FFFFFF">&nbsp;</td>
+    </tr>
+  <tr>
+    <td bgcolor="#FFFFFF" class="text">Add Image </td>
+    <td bgcolor="#FFFFFF" class="text">:</td>
+    <td bgcolor="#FFFFFF"><label>
+      <input name="image" type="file" class="content_text" id="image" size="33" >
+    </label></td>
+    <td bgcolor="#FFFFFF">&nbsp;</td>
+    </tr>
+	<TR><td colspan="2"></td>
+      <td><span class="text1"><font color="#FF0000">(.gif / .jpeg / .png files only)</font></span> </td></TR>
+  <tr height="">
+    <td width="10%" bgcolor="#FFFFFF"></td>
+    <td width="1%" bgcolor="#FFFFFF"></td>
+    <td width="28%" bgcolor="#FFFFFF"></td>
+    <td width="20%" bgcolor="#FFFFFF">&nbsp;</td>
+    </tr>
+  <tr>
+    <td height="22" bgcolor="#FFFFFF" class="text">Subject</td>
+    <td bgcolor="#FFFFFF" class="text">:</td>
+    <td bgcolor="#FFFFFF"><label>
+      <input name="subject" type="text" class="content_text" size="53" />
+    </label></td>
+    <td bgcolor="#FFFFFF">&nbsp;</td>
+    </tr>
+                </table></td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td bgcolor="#FFFFFF">&nbsp;</td>
+            <td bgcolor="#FFFFFF">&nbsp;</td>
+          </tr>
+          <tr>
+            <td height="23" bgcolor="#FFFFFF">&nbsp;</td>
+            <td valign="top"><table width="100%" border=" 0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="10%" height="121" valign="bottom" bgcolor="#FFFFFF" class="text">Content</td>
+                <td width="1%" valign="bottom" bgcolor="#FFFFFF" class="text">:</td>
+                <td width="64%" rowspan="2"  bgcolor="#FFFFFF"><textarea name="content" cols="50" rows="15" class="content_text" ></textarea></td>
+                <td width="25%" rowspan="2" bgcolor="#FFFFFF">&nbsp;</td>
+              </tr>
+              <tr>
+                <td height="140" valign="top" bgcolor="#FFFFFF" class="text">&nbsp;</td>
+                <td width="1%" valign="top" bgcolor="#FFFFFF" class="text">&nbsp;</td>
+              </tr>
+              <tr>
+                <td height="45" valign="top" bgcolor="#FFFFFF" class="text">&nbsp;</td>
+                <td valign="top" bgcolor="#FFFFFF" class="text">&nbsp;</td>
+                <td valign="top" bgcolor="#FFFFFF"><table width="90%" border=" 0" cellspacing="0" cellpadding="0">
+                </table></td>
+                <td bgcolor="#FFFFFF">&nbsp;</td>
+              </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td height="4" colspan="2" bgcolor="#FFFFFF">  </td>
+            </tr>
+          <tr>
+            <td height="30">&nbsp;</td>
+            <td><table width="100%" border=" 0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="11%" height="30">&nbsp;</td>
+                <td width="15%"><input type="image" src="image/submite.jpg" />
+				
+				</td>
+                <td width="17%"><a href="#"><img src="image/reset.jpg" width="64" height="21" border="0"/></a></td>
+                <td width="57%"><!--<a href="#"><img src="image/html.jpg" width="64" height="21" border="0" /></a>--></td>
+              </tr>
+			 
+            </table></td>
+          </tr>
+        </table></form></td>
+      </tr>
+      <tr>
+        <td height="17" colspan="3" bgcolor="#FFFFFF" class="text1"><img src="image/line1.jpg" width="778" height="3" /></td>
+        </tr>
+      
+    </table></td>
+  </tr>
+</table>
+
+</body>
+</html>
